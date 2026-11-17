@@ -4,6 +4,7 @@
 
 <t:pageTemplate pageTitle="Cars">
     <h1>Cars</h1>
+    <a href="${pageContext.request.contextPath}/AddCar" class="btn btn-primary btn-lg">Add Car</a>
     <div class="container text-center">
         <div class="row fw-bold">
             <div class="col">License plate</div>
