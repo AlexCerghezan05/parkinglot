@@ -45,6 +45,34 @@ public class CarsBean {
         entityManager.persist(car);
     }
 
+    public CarDto findById(Long carId) {
+        LOG.info("findById");
+        Car car = entityManager.find(Car.class, carId);
+        return new CarDto(car.getId(), car.getLicensePlate(), car.getParkingSpot(),
+                car.getOwner().getUsername());
+    }
+
+    public void updateCar(Long carId, String licensePlate, String parkingSpot, Long ownerId) {
+        LOG.info("updateCar");
+
+        if (carId == null) {
+            return;
+        }
+
+        User newOwner = entityManager.find(User.class, ownerId);
+        Car car = entityManager.find(Car.class, carId);
+        car.setLicensePlate(licensePlate);
+        car.setParkingSpot(parkingSpot);
+
+        if (!newOwner.equals(car.getOwner())) {
+            // remove the car from its old owner
+            car.getOwner().getCars().remove(car);
+            // add the car to its new owner
+            car.setOwner(newOwner);
+            newOwner.getCars().add(car);
+        }
+    }
+
     private List<CarDto> copyCarsToDto(List<Car> cars) {
         List<CarDto> carDtos = new ArrayList<>();
         for (Car car : cars) {

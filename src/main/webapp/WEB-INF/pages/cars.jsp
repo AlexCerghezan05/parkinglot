@@ -10,12 +10,16 @@
             <div class="col">License plate</div>
             <div class="col">Parking spot</div>
             <div class="col">Owner</div>
+            <div class="col"></div>
         </div>
         <c:forEach var="car" items="${cars}">
             <div class="row">
                 <div class="col">${car.licensePlate}</div>
                 <div class="col">${car.parkingSpot}</div>
                 <div class="col">${car.ownerName}</div>
+                <div class="col">
+                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
+                </div>
             </div>
         </c:forEach>
     </div>
